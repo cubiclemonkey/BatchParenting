@@ -5,7 +5,6 @@ echo  ## This file must be run as an Administrator in order to make changes! ##
 echo.
 IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" echo ## This is a backup of your default hosts file ## %date% - %time% >> \Windows\System32\drivers\etc\hosts
 IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" copy \Windows\System32\drivers\etc\hosts \Windows\System32\drivers\etc\hosts.bak\
-REM echo ## This is a backup of your default hosts file ## %date% - %time% >> \Windows\System32\drivers\etc\hosts
 :RESTART
 CLS
 echo.
