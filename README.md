@@ -10,3 +10,5 @@ Without implementing everything immediately and providing some context to parent
 based upon the needs of their child rather than what I can think of.
 
 This will continue to evolve with feedback and questions from parents having success and needing different kids of support.
+
+I've included shortcut that will need to be 'pointed' the batch file but I'm thinking of how I want to make this seamless.
