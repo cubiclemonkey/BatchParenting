@@ -25,7 +25,6 @@ echo.
 echo  P. Reset another user's password
 echo.
 echo  X. Close this Window
-echo  H. I need help with this!
 echo.
 set /p PARENTSEL=You must choose wisely: 
 echo.
