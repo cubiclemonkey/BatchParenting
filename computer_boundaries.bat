@@ -3,8 +3,10 @@ TITLE Basic Parental Lockdown
 echo.
 echo  ## This file must be run as an Administrator in order to make changes! ##
 echo.
-REM IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" echo ## This is a backup of your default hosts file ## %date% - %time% >> \Windows\System32\drivers\etc\hosts
-IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" copy \Windows\System32\drivers\etc\hosts \Windows\System32\drivers\etc\hosts.bak
+REM IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" copy \Windows\System32\drivers\etc\hosts \Windows\System32\drivers\etc\hosts.bak
+set myniciscalled=none
+IF NOT EXIST "%programfiles%\Boundaries" mkdir "%programfiles%\Boundaries"
+IF EXIST "%programfiles%\Boundaries\%computername%.ini" set /p myniciscalled=<"%programfiles%\Boundaries\%computername%.ini"
 :RESTART
 CLS
 echo.
@@ -23,8 +25,12 @@ echo  8. Disable Wi-Fi
 echo  9. Enable Wi-Fi
 echo.
 echo  P. Reset another user's password
+echo  S. Store my settings
 echo.
 echo  X. Close this Window
+echo.
+echo  # Recognized network connection: %myniciscalled%
+IF /I %myniciscalled%==none echo  # Select 'S' to save your settings!
 echo.
 set /p PARENTSEL=You must choose wisely: 
 echo.
@@ -38,6 +44,7 @@ IF /I %PARENTSEL%==7 GOTO REMOVEMSS
 IF /I %PARENTSEL%==8 GOTO DISABLE
 IF /I %PARENTSEL%==9 GOTO ENABLE
 IF /I %PARENTSEL%==P GOTO CHANGEPW
+IF /I %PARENTSEL%==S GOTO MYSETTINGS
 IF /I %PARENTSEL%==H GOTO HELPH
 IF /I %PARENTSEL%==X GOTO BUBYE
 :BLOCKWEB
@@ -139,6 +146,18 @@ net user
 set /p theyforgothuh= Enter the correct username: 
 net user %theyforgothuh% password
 echo %theyforgothuh% password is now: password
+echo.
+PAUSE
+GOTO RESTART
+:MYSETTINGS
+echo.
+REM IF NOT EXIST "%programfiles%\Boundaries" mkdir "%programfiles%\Boundaries"
+echo  # Here's a list of how you're connected to your network:
+echo.
+wmic nic where NetConnectionStatus=2 get NetConnectionID
+echo.
+set /p myniciscalled= Please type the name listed under 'NetConnectionID' (case sensitive): 
+echo %myniciscalled% > "%programfiles%\Boundaries\%computername%.ini"
 echo.
 PAUSE
 GOTO RESTART
