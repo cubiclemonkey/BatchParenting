@@ -5,8 +5,8 @@ REM echo  ## This file must be run as an Administrator in order to make changes!
 echo.
 IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" copy \Windows\System32\drivers\etc\hosts \Windows\System32\drivers\etc\hosts.bak
 set myniciscalled=none
-IF NOT EXIST "%programfiles%\Boundaries" mkdir "%programfiles%\Boundaries"
-IF EXIST "%programfiles%\Boundaries\%computername%.ini" set /p myniciscalled=<"%programfiles%\Boundaries\%computername%.ini"
+IF NOT EXIST "%programfiles%\Batch Parenting" mkdir "%programfiles%\Batch Parenting"
+IF EXIST "%programfiles%\Batch Parenting\%computername%.ini" set /p myniciscalled=<"%programfiles%\Batch Parenting\%computername%.ini"
 :RESTART
 CLS
 echo.
@@ -160,21 +160,15 @@ echo.
 wmic nic where NetConnectionStatus=2 get NetConnectionID
 echo.
 set /p myniciscalled= Please type the name listed under 'NetConnectionID' (case sensitive): 
-echo %myniciscalled% > "%programfiles%\Boundaries\%computername%.ini"
+echo %myniciscalled% > "%programfiles%\Batch Parenting\%computername%.ini"
 echo.
 PAUSE
 GOTO RESTART
 :HELPH
 CLS
 echo.
-echo  David, here! Don't get too wrapped around the axle! I hoped to make everything self explanatory.
-echo  But if I failed at that, send me an email: thomasdb78@gmail.com
 echo.
-copy "C:\Parental Management\HelpPlease.url" C:\Users\%username%\Desktop\ > nul
-echo  I've dropped a shortcut on the Desktop. That will download what's need to help me get connected.
-echo.
-echo  Cheers!
-echo.
+REM copy "C:\Program Files\Batch Parenting\HelpPlease.url" C:\Users\%username%\Desktop\ > nul
 PAUSE
 GOTO RESTART
 :BUBYE
