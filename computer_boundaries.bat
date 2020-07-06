@@ -1,9 +1,9 @@
 @echo off
 TITLE Basic Parental Lockdown
 echo.
-echo  ## This file must be run as an Administrator in order to make changes! ##
+REM echo  ## This file must be run as an Administrator in order to make changes! ##
 echo.
-REM IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" copy \Windows\System32\drivers\etc\hosts \Windows\System32\drivers\etc\hosts.bak
+IF NOT EXIST "\Windows\System32\drivers\etc\hosts.bak" copy \Windows\System32\drivers\etc\hosts \Windows\System32\drivers\etc\hosts.bak
 set myniciscalled=none
 IF NOT EXIST "%programfiles%\Boundaries" mkdir "%programfiles%\Boundaries"
 IF EXIST "%programfiles%\Boundaries\%computername%.ini" set /p myniciscalled=<"%programfiles%\Boundaries\%computername%.ini"
@@ -13,11 +13,13 @@ echo.
 echo  What do you need to do? 
 echo.
 echo  1. Block access: YouTube, Roblox, Facebook, Twitch
+REM Build this out to take in domains and build the hosts file accordingly.
 echo  2. Allow access: YouTube, Roblox, Facebook, Twitch
 echo  3. Disable internet
 echo  4. Enable internet
 echo. 
 echo  5. Turn on login time restrictions
+REM Build this out to take in time specified for account specified.
 echo  6. Turn off login time restrictions
 echo  7. Remove MS Store from PC
 echo.
@@ -25,6 +27,7 @@ echo  8. Disable Wi-Fi
 echo  9. Enable Wi-Fi
 echo.
 echo  P. Reset another user's password
+REM Build this out to specify the password set.
 echo  S. Store my settings
 echo.
 echo  X. Close this Window
