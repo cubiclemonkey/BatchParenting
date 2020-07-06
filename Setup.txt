@@ -1,0 +1,8 @@
+This does not need to be installed but will create it's own working directly at this location:
+
+ > C:\Program Files\Batch Parenting\
+ 
+ If you'd like to run the batch file from where you downloaded that will work. You can also extract the contents of the zipfile to that location (ensuring spelling)
+ and then point the provided shortcut to that location from the Desktop.
+ 
+ 
