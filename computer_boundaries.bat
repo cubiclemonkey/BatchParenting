@@ -1,5 +1,6 @@
 @echo off
 TITLE Basic Parental Lockdown
+color 9f
 echo.
 REM echo  ## This file must be run as an Administrator in order to make changes! ##
 echo.
@@ -18,9 +19,9 @@ echo  2. Allow access: YouTube, Roblox, Facebook, Twitch
 echo  3. Disable internet
 echo  4. Enable internet
 echo. 
-echo  5. Turn on login time restrictions
+REM echo  5. Turn on login time restrictions
 REM Build this out to take in time specified for account specified.
-echo  6. Turn off login time restrictions
+REM echo  6. Turn off login time restrictions
 echo  7. Remove MS Store from PC
 echo.
 echo  8. Disable Wi-Fi
@@ -102,22 +103,72 @@ GOTO BLOCKWEB
 copy \Windows\System32\drivers\etc\hosts.bak \Windows\System32\drivers\etc\hosts /y
 GOTO RESTART
 :TIMENOR
-net user laurel /time:all
+REM net user laurel /time:all
 echo.
-echo Laurel's login time is not restricted.
+REM echo Laurel's login time is not restricted.
 echo.
 PAUSE
 GOTO RESTART
 :TIMERES
-net user laurel /times:Su-Th,10:00-19:00;F-Sa,10:00-19:00
+CLS
 echo.
-echo Laurel's login times have been restricted to:
+echo  # Time Restrictions #
+echo  Step 1: Select that account
 echo.
-echo Sunday - Thursday, 10:00 to 19:00
-echo Friday - Saturday, 10:00 to 19:00
+net user
 echo.
-PAUSE
-GOTO RESTART
+set /p kidaccount= Type the account name to restrict: 
+echo.
+CLS
+echo.
+echo  # Restricting: %kidaccount% #
+echo  Step 2: Pick the days
+echo.
+echo  Y. Seven days a week
+echo  W. Weekends only
+echo  M. Monday thru Friday
+echo  S. Specify first and last day
+echo.
+set /p restrictday= What day(s) can %kidaccount% use the computer: 
+IF /I %restrictday%==Y GOTO TIMERES7
+IF /I %restrictday%==W GOTO TIMERESW
+IF /I %restrictday%==M GOTO TIMERESM
+IF /I %restrictday%==S GOTO TIMERESS
+GOTO TIMERES
+:TIMERES7
+set onlydays=Su-M
+GOTO TIMERESS
+:TIMERESW
+set onlydays=Sa-Su
+GOTO TIMERESS
+:TIMERESM
+set onlydays=M-F
+GOTO TIMERESS
+:TIMERESS
+CLS
+echo.
+echo  # Restricting: %kidaccount% #
+echo  Step 2: Pick the days
+echo.
+echo  We need to set the days they can login from start to finish.
+echo.
+echo  For example: If you want to specify from Tuesday to Thursday, Tuesday would be
+echo  entered first and Thursday would be entered second.
+echo.
+set /p firstday=
+:TIMERESN
+CLS
+echo.
+echo  # Restricting: %kidaccount% #
+echo  Step 3: Pick the time
+echo.
+set /p starttime= What is the earliest time they can login: 
+echo.
+set /p stoptime= When is their time up: 
+echo.
+echo
+echo  So they can logon after X and will be restricted after Y.
+REM Parse numbers entered (provide format) to build out string and command correctly
 :REMOVEMSS
 Remove
 Get-AppxPackage -allusers *WindowsStore* | Remove-AppxPackage
