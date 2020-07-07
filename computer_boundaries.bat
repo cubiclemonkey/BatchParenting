@@ -1,5 +1,5 @@
 @echo off
-TITLE Basic Parental Lockdown
+TITLE BatchParenting
 color 9f
 echo.
 REM echo  ## This file must be run as an Administrator in order to make changes! ##
@@ -152,10 +152,17 @@ echo  Step 2: Pick the days
 echo.
 echo  We need to set the days they can login from start to finish.
 echo.
-echo  For example: If you want to specify from Tuesday to Thursday, Tuesday would be
-echo  entered first and Thursday would be entered second.
+echo  For example:
+echo  If you want to specify from Tuesday to Thursday, Tuesday would be
+echo   entered first and Thursday would be entered second.
 echo.
-set /p firstday=
+echo Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
+echo.
+set /p firstday= First day of the week %kidaccount% can login: 
+echo.
+set /p lastday= Last day of the week %kidaccount% can login: 
+echo.
+echo 
 :TIMERESN
 CLS
 echo.
@@ -219,7 +226,6 @@ GOTO RESTART
 CLS
 echo.
 echo.
-REM copy "C:\Program Files\Batch Parenting\HelpPlease.url" C:\Users\%username%\Desktop\ > nul
 PAUSE
 GOTO RESTART
 :BUBYE
