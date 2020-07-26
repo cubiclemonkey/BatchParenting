@@ -119,6 +119,7 @@ net user
 echo.
 set /p kidaccount= Type the account name to restrict: 
 echo.
+:TIMERES2
 CLS
 echo.
 echo  # Restricting: %kidaccount% #
@@ -137,13 +138,13 @@ IF /I %restrictday%==S GOTO TIMERESS
 GOTO TIMERES
 :TIMERES7
 set onlydays=Su-M
-GOTO TIMERESS
+GOTO TIMERESN
 :TIMERESW
 set onlydays=Sa-Su
-GOTO TIMERESS
+GOTO TIMERESN
 :TIMERESM
 set onlydays=M-F
-GOTO TIMERESS
+GOTO TIMERESN
 :TIMERESS
 CLS
 echo.
@@ -156,32 +157,46 @@ echo  For example:
 echo  If you want to specify from Tuesday to Thursday, Tuesday would be
 echo   entered first and Thursday would be entered second.
 echo.
-echo Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
+echo  Day Format:  Su, M, T, W, Th, F, Sa
 echo.
 set /p firstday= First day of the week %kidaccount% can login: 
 echo.
 set /p lastday= Last day of the week %kidaccount% can login: 
 echo.
-echo 
+echo  %kidaccount% will be able to login %firstday% to %lastday%.
+echo.
+set /p isthatright= If that's correct we can set a time: 
+IF NOT /I %isthatright%==Y GOTO TIMERESS
 :TIMERESN
 CLS
 echo.
 echo  # Restricting: %kidaccount% #
 echo  Step 3: Pick the time
 echo.
-set /p starttime= What is the earliest time they can login: 
+echo  Examples: 8a is 8:00am and 10p is 10:00pm
 echo.
-set /p stoptime= When is their time up: 
-echo.
-echo
-echo  So they can logon after X and will be restricted after Y.
-REM Parse numbers entered (provide format) to build out string and command correctly
-:REMOVEMSS
-Remove
-Get-AppxPackage -allusers *WindowsStore* | Remove-AppxPackage
+set /p starttime=What is the earliest time %kidaccount% can login:
 
-Reinstall
-Get-AppxPackage -allusers *WindowsStore* | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register “$($_.InstallLocation)\AppXManifest.xml”}
+set /p stoptime=When is their time up: 
+echo.
+echo  2 -> Let me fix the days
+echo  1 -> Let me select a different account
+echo  N -> Let me fix the times
+echo  Y -> Continue
+echo.
+echo  So %kidaccount% can login %firstday% thru %lastday%, from %starttime% to %stoptime%.
+echo.
+set /p timetobuild= Everything look correct?: 
+echo.
+IF /I %timetobuild%==N GOTO TIMERESN
+IF /I %timetobuild%==1 GOTO TIMERES
+IF /I %timetobuild%==2 GOTO TIMERES2
+REM Time to build the command with the provided variables and store the final command for reference.
+:REMOVEMSS
+REM Remove
+powershell.exe Get-AppxPackage -allusers *WindowsStore* | Remove-AppxPackage
+REM Reinstall
+REM Get-AppxPackage -allusers *WindowsStore* | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register “$($_.InstallLocation)\AppXManifest.xml”}
 GOTO RESTART
 :SETDNS
 echo.
