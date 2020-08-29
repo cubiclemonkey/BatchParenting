@@ -1,5 +1,5 @@
 # BatchParenting
-Shoring up parenting with a little bit of scripting.
+Shoring up parenting with a little bit of Windows scripting.
 
 The goal for this small collection of scripts is to make some settings in Windows more available to parents with less knowledge of computers.
 
